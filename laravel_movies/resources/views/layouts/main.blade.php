@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="/css/main.css">
 </head>
 <body class="font-sans bg-gray-900 text-white">
-    <nav class="border-b border-gray-800">
+    <nav>
         <div class="container mx-auto flex items-center justify-between px-4 py-6">
             <ul class="flex items-center">
                 <li>
@@ -27,9 +27,7 @@
                 </li>
             </ul>
             <div class="flex items-center">
-                <div class="relative">
-                    <input type="text" class="bg-gray-800 rounded-full w-64 px-4 py-1" placeholder="Search">
-                </div>
+                @livewire('search-dropdown')
             </div>
         </div>
     </nav>
