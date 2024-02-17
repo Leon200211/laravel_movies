@@ -5,40 +5,39 @@
         <div>
             <img src="/img/test.png" width="600">
             <div>
-                <h2>TEST</h2>
+                <h2>{{ $movie['title'] }}</h2>
                 <div>
-                    <span>85%</span>
+                    <span>{{ $movie['vote_average'] }}</span>
                     <span>|</span>
-                    <span>2024</span>
+                    <span>{{ \Carbon\Carbon::rawParse($movie['release_date'])->format('M d, Y') }}</span>
+                    <span>|</span>
+                    <span>
+                         @foreach($movie['genres'] as $genre)
+                            {{ $genre['name'] }} @if (!$loop->last),@endif
+                        @endforeach
+                    </span>
                 </div>
 
-                <p>
-                    Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum
-                    Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum
-                    Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum
-                    Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum
-                    Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum
-                    Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum
-                </p>
+                <p>{{ $movie['overview'] }}</p>
 
                 <div>
                     <h4>Feature Cast</h4>
                     <div>
-                        <div>
-                            <div>Bong</div>
-                            <div>Screenplay</div>
-                        </div>
-                        <div>
-                            <div>Han</div>
-                            <div>Story</div>
-                        </div>
+                        @foreach($movie['credits']['crew'] as $crew)
+                            @if ($loop->index < 2)
+                                <div>
+                                    <div>{{ $crew['name'] }} - {{ $crew['job'] }}</div>
+                                </div>
+                            @endif
+                        @endforeach
                     </div>
                 </div>
-
+                <br>
+                <br>
                 <div>
-                    <button>
+                    <a href="https://youtube.com/watch?v={{ $movie['videos']['results'][0]['key'] }}">
                         <span>Play Trailer</span>
-                    </button>
+                    </a>
                 </div>
 
             </div>

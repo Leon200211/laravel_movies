@@ -34,8 +34,6 @@ class MoviesController extends Controller
             return [$genre['id'] => $genre['name']];
         });
 
-
-
         return view('index', [
             'popularMovies' => $popularMovies['results'],
             'nowPlayingMovies' => $nowPlayingMovies['results'],
@@ -68,11 +66,18 @@ class MoviesController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function show($id)
     {
-        //
+        $movie = Http::withToken(config('services.tmdb.token'))
+            ->get('https://api.themoviedb.org/3/movie/' . $id . '?append_to_response=credits,videos,images')
+            ->json()
+        ;
+
+        return view('show', [
+            'movie' => $movie,
+        ]);
     }
 
     /**
